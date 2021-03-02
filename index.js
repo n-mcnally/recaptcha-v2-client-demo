@@ -2,21 +2,15 @@
  * @type {Object.<string, HTMLElement>}
  */
 let elements = {
-  // site key elements
   siteKey: "site_key",
   siteKeyInput: "site_key_input",
   siteKeySubmit: "site_key_submit",
-  // status
   status: "status",
-  // hidden copy field
   copyInput: "copy_input",
 };
 
 let recaptchaLoaded = false;
 
-/**
- * Replaces string ids in elements with their dom node reference
- */
 const identifyElements = () => {
   Object.entries(elements).forEach(([key, id]) => {
     elements[key] = document.getElementById(id);
@@ -24,12 +18,10 @@ const identifyElements = () => {
 };
 
 /**
- * Pushes a status update to the pre output.
- *
  * @param {string} msg
  * @param {"default"|"error"|"warn"|"success"} type
  */
-const pushStatus = (msg, type = "default", clickToCopy = false) => {
+const log = (msg, type = "default", clickToCopy = false) => {
   const labelClass = `status-${type}`;
   const labelText = type === "default" ? "STATUS" : type.toUpperCase();
 
@@ -62,14 +54,14 @@ const submitSiteKey = () => {
   grecaptcha.render("captcha_holder", {
     sitekey: value,
     callback: (response) => {
-      pushStatus("captcha success", "success");
-      pushStatus(response, "success", true);
+      log("captcha success", "success");
+      log(response, "success", true);
     },
-    "error-callback": () => pushStatus("failed to load captcha", "error"),
-    "error-expired": () => pushStatus("captcha expired", "error"),
+    "error-callback": () => log("failed to load captcha", "error"),
+    "expired-callback": () => log("captcha expired", "error"),
   });
 
-  pushStatus(`rendering captcha...`);
+  log(`rendering captcha...`);
 
   window.localStorage.setItem("sitekey", value);
 };
@@ -88,12 +80,12 @@ const prepare = () => {
     elements.siteKeyInput.value = value;
   }
 
-  pushStatus("waiting for site key");
+  log("waiting for site key");
 };
 
 // Called by recaptcha lib
 window.onloadCallback = () => {
-  pushStatus("reCAPTCHA library loaded", "success");
+  log("reCAPTCHA library loaded", "success");
 };
 
 // sets value of hidden field then copies
@@ -105,7 +97,7 @@ window.copyKey = (value) => {
 
   document.execCommand("copy");
 
-  pushStatus("copied to clipboard");
+  log("copied to clipboard");
 };
 
 (() => {
@@ -113,7 +105,7 @@ window.copyKey = (value) => {
 
   if (window.location.host.startsWith("127")) {
     for (let i = 100; i < 1000; i += 100) {
-      window.setTimeout(() => pushStatus("redirecting to 'localhost/...'"), i);
+      window.setTimeout(() => log("redirecting to 'localhost/...'"), i);
     }
 
     const newLocation = window.location.href.replace("127.0.0.1", "localhost");

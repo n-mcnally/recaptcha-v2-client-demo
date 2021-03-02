@@ -1,20 +1,12 @@
 /**
  * @type {Object.<string, HTMLElement>}
  */
-let elements = {
+const elements = {
   siteKey: "site_key",
   siteKeyInput: "site_key_input",
   siteKeySubmit: "site_key_submit",
   status: "status",
   copyInput: "copy_input",
-};
-
-let recaptchaLoaded = false;
-
-const identifyElements = () => {
-  Object.entries(elements).forEach(([key, id]) => {
-    elements[key] = document.getElementById(id);
-  });
 };
 
 /**
@@ -38,9 +30,12 @@ const log = (msg, type = "default", clickToCopy = false) => {
   elements.status.append(el);
 };
 
-/**
- * Called when site key is submitted.
- */
+const identifyElements = () => {
+  Object.entries(elements).forEach(([key, id]) => {
+    elements[key] = document.getElementById(id);
+  });
+};
+
 const submitSiteKey = () => {
   const value = elements.siteKeyInput.value;
 
@@ -66,9 +61,6 @@ const submitSiteKey = () => {
   window.localStorage.setItem("sitekey", value);
 };
 
-/**
- * Set up event handlers.
- */
 const prepare = () => {
   const keydown = (event) => event.key === "Enter" && submitSiteKey();
 
@@ -76,6 +68,7 @@ const prepare = () => {
   elements.siteKeyInput.addEventListener("keydown", keydown);
 
   const value = window.localStorage.getItem("sitekey");
+
   if (value) {
     elements.siteKeyInput.value = value;
   }
@@ -88,7 +81,6 @@ window.onloadCallback = () => {
   log("reCAPTCHA library loaded", "success");
 };
 
-// sets value of hidden field then copies
 window.copyKey = (value) => {
   elements.copyInput.value = value;
 
@@ -109,7 +101,6 @@ window.copyKey = (value) => {
     }
 
     const newLocation = window.location.href.replace("127.0.0.1", "localhost");
-
     window.setTimeout(() => (window.location.href = newLocation), 1000);
 
     return;

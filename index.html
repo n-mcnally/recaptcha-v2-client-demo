@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>reCAPTCHA V2 demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- stage one - get key -->
+    <div id="site_key">
+      <input id="site_key_input" placeholder="Site key" type="text" />
+      <button id="site_key_submit">Save</button>
+    </div>
+
+    <!-- status display -->
+    <pre id="status"></pre>
+
+    <script src="index.js"></script>
+    <script
+      src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+      async
+      defer
+    ></script>
+  </body>
+</html>

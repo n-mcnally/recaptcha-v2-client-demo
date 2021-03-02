@@ -11,6 +11,8 @@ pre .status {
 
 pre p {
   margin: 0 0 5px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 pre .status-default {
@@ -31,4 +33,12 @@ pre .status-success {
 
 .hidden {
   display: none;
+}
+
+#captcha_holder {
+  margin-top: 15px;
+}
+
+#copy_input {
+  margin-left: -500px;
 }

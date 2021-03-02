@@ -13,10 +13,17 @@
       <button id="site_key_submit">Save</button>
     </div>
 
+    <!-- stage two - display captcha -->
+    <div id="captcha_holder"></div>
+
     <!-- status display -->
     <pre id="status"></pre>
 
+    <!-- off-screen input used to copy text to clipboard -->
+    <input id="copy_input" type="text" value="" />
+
     <script src="index.js"></script>
+
     <script
       src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
       async

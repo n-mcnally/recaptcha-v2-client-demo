@@ -53,7 +53,7 @@ const submitSiteKey = () => {
       log(response, "success", true);
     },
     "error-callback": () => log("failed to load captcha", "error"),
-    "expired-callback": () => log("captcha expired", "error"),
+    "expired-callback": () => log("captcha expired", "warn"),
   });
 
   log(`rendering captcha...`);
